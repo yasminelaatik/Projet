@@ -58,3 +58,4 @@ public class Barre {
         return "Barre{" + "identificateur=" + identificateur + ", noeud1=" + noeud1 + ", noeud2=" + noeud2 + ", typeBarre=" + typeBarre + '}';
     }
 }
+//c
