@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package com.mycompany.projettreillis;
 
-/**
- *
- * @author PC
- */
-public class Noeuds {
+public class Noeud {
     int identificateur;
     
-    public Noeuds (int identificateur){
+    public Noeud (int identificateur){
         this.identificateur = identificateur;
         
         
