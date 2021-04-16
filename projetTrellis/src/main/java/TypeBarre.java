@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package com.mycompany.projettreillis;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Arrays;
 
-/**
- *
- * @author PC
- */
-public class TypeBarre {
+public class TypeBarre extends Catalogue{
     private int identificateur;
     private double cout;
     private double lMin;
@@ -16,15 +11,16 @@ public class TypeBarre {
     private double rMaxT;
     private double rMaxC;
     
-    public TypeBarre(int identificateur, double cout , double lMin, double lMax, double rMaxT, double rMaxC ){
-        this.identificateur= identificateur;
-        this.cout = cout;
-        this.lMin= lMin;
-        this.lMax = lMax;
-        this.rMaxC = rMaxC;
-        this.rMaxT= rMaxT;
+    public TypeBarre(int identificateur) {
+        HashMap <Integer, String> type = type() ;
+        String typeBarre = type.get(identificateur) ;
+        HashMap <String, List<Double>> attributs = attributs() ;
+        List<Double> matériau = attributs.get(typeBarre) ;
         
-        
+        this.cout = matériau.get(0);
+        this.lMin = matériau.get(1);
+        this.lMax = matériau.get(2);
+        this.rMaxT = matériau.get(3);
+        this.rMaxC = matériau.get(4) ;
     }
-    
 }
