@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package com.mycompany.projettreillis;
 
-/**
- *
- * @author PC
- */
-public class NoeudAppui extends Noeuds {
+public class NoeudAppui extends Noeud {
     private double point1;
     private double point2;
     private double position;
@@ -20,6 +12,4 @@ public class NoeudAppui extends Noeuds {
         this.position= position;
         
     }
-    
-    
 }
