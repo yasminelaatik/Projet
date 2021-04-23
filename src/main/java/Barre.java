@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author Yasmine
- */
 public class Barre {
     private int identificateur;
     private int noeud1;
     private int noeud2;
     private int typeBarre;
     
-    private Treillis treillis;
+    private int idTreillis;
     private Noeuds noeudUn;
     private Noeuds noeudDeux;
     
@@ -54,12 +44,12 @@ public class Barre {
         return typeBarre;
     }
 
-    public Treillis getTreillis() {
-        return treillis;
+    public int getidTreillis() {
+        return idTreillis;
     }
 
-    void setTreillis(Treillis treillis) {
-        this.treillis = treillis;
+    void setidTreillis(int idTreillis) {
+        this.idTreillis = idTreillis;
     }
 
     public void setTypeBarre(int typeBarre) {
@@ -70,8 +60,5 @@ public class Barre {
     public String toString() {
         return "Barre{" + "identificateur=" + identificateur + ", noeud1=" + noeud1 + ", noeud2=" + noeud2 + ", typeBarre=" + typeBarre + '}';
     }
-
-   
-    
     
 }

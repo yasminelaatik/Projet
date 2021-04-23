@@ -1,37 +1,20 @@
-
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author PC
- */
-
-    import java.util.ArrayList;
-import java.util.List;
-
-public class Treillis extends Barre{
+public class Treillis {
     private List<Barre> liste;
+    private int identificateur;
           
-public Treillis(){
-    this.liste = new ArrayList<Barre>();
+    public Treillis(){
+        this.liste = new ArrayList<Barre>();
+    }
     
-}
-public void add(Barre b){
-    if(b.getTreillis() != this){
-        if(b.getTreillis()!= null){
+    public void add(Barre b){
+    
+        if(b.getidTreillis() != this.identificateur){
             throw new Error("la barre est déjà dans un autre treillis");
         }
         this.liste.add(b);
-        b.setTreillis(this);
+        b.setidTreillis(this.identificateur);
+    }
 }
-    
-}
-}
-
