@@ -1,11 +1,13 @@
 public class Point {
-    private double px;
-    private double py;
+    public double px;
+    public double py;
     
     public Point (double px, double py){
+        if ((px<Terrain.xmin)||(px>Terrain.xmax)||(py<Terrain.ymin)||(py>Terrain.ymax)) {
+            throw new Error("Vous ne pouvez pas construire de points ici") ;
+        }
         this.px = px;
         this.py = py;
-        
     }
     
     public Point (){
@@ -28,16 +30,12 @@ public class Point {
         this.py = py;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String toString() {
         return "(" + px + "," + py + ')';
     } 
    
-    }
+}
     
      
        

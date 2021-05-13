@@ -1,21 +1,21 @@
 public class Barre {
-    private int identificateur;
-    private int noeud1;
-    private int noeud2;
-    private int typeBarre;
+    public int identificateur; 
+    public Noeuds noeud1;
+    public Noeuds noeud2;
+    public TypeBarre TB ;
+    public int idT;
     
-    private int idTreillis;
-    private Noeuds noeudUn;
-    private Noeuds noeudDeux;
-    
-    public Barre(int identificateur,int noeud1, int noeud2, int typeBarre ){
-        this.identificateur = identificateur;
+    private static int idB=0;
+
+    public Barre(Noeuds noeud1, Noeuds noeud2, TypeBarre TB){
+        idB++;
+        this.identificateur = idB;
         this.noeud1 = noeud1;
         this.noeud2 = noeud2;
-        this.typeBarre = typeBarre;
+        this.TB = TB;
+        this.idT = Treillis.identificateur;
     }
 
-    
     public int getIdentificateur() {
         return identificateur;
     }
@@ -24,41 +24,41 @@ public class Barre {
         this.identificateur = identificateur;
     }
 
-    public int getNoeud1() {
+    public Noeuds getNoeud1() {
         return noeud1;
     }
 
-    public void setNoeud1(int noeud1) {
+    public void setNoeud1(Noeuds noeud1) {
         this.noeud1 = noeud1;
     }
 
-    public int getNoeud2() {
+    public Noeuds getNoeud2() {
         return noeud2;
     }
 
-    public void setNoeud2(int noeud2) {
+    public void setNoeud2(Noeuds noeud2) {
         this.noeud2 = noeud2;
     }
 
-    public int getTypeBarre() {
-        return typeBarre;
+    public TypeBarre getTB() {
+        return TB;
     }
 
     public int getidTreillis() {
-        return idTreillis;
+        return idT;
     }
-
+    
     void setidTreillis(int idTreillis) {
-        this.idTreillis = idTreillis;
+        this.idT = idTreillis;
     }
 
-    public void setTypeBarre(int typeBarre) {
-        this.typeBarre = typeBarre;
+    public void setTypeBarre(TypeBarre TB) {
+        this.TB = TB;
     }
 
     @Override
     public String toString() {
-        return "Barre{" + "identificateur=" + identificateur + ", noeud1=" + noeud1 + ", noeud2=" + noeud2 + ", typeBarre=" + typeBarre + '}';
+        return "Barre{" + "identificateur=" + identificateur + ", noeud1=" + noeud1 + ", noeud2=" + noeud2 + ", typeBarre=" + TB + '}';
     }
-    
+
 }

@@ -1,13 +1,11 @@
 public class NoeudAppui extends Noeuds {
-    private double point1;
-    private double point2;
-    private double position;
+    public double abscisse;
+    public double ordonnee;
     
-    public NoeudAppui (double point1,double point2, double position, int identificateur){
-        super(identificateur);
-        this.point1= point1;
-        this.point2 = point2;
-        this.position = position;
-    }
-      
+    public NoeudAppui(TriangleTerrain TT, int j, double alpha) {
+        int i = j%3 ;
+        SegmentTerrain ST = new SegmentTerrain(TT, i) ;
+        this.abscisse = alpha*ST.début.px + (1-alpha)*ST.fin.px ;
+        this.ordonnee = alpha*ST.début.py + (1-alpha)*ST.fin.py ;
+    }     
 }

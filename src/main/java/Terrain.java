@@ -1,8 +1,8 @@
 public class Terrain {
-    private double xmin ;
-    private double xmax ;
-    private double ymin ;
-    private double ymax ;
+    public static double xmin ;
+    public static double xmax ;
+    public static double ymin ;
+    public static double ymax ;
     
     public Terrain (double xmin, double xmax, double ymin, double ymax) {
         this.xmin = xmin;
