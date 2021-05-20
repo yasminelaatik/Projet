@@ -2,6 +2,7 @@ package classes;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Treillis {
     private List<Barre> liste;

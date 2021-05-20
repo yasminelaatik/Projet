@@ -1,5 +1,6 @@
 package gui;
 
+import classes.Treillis;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -10,65 +11,54 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class MainPane extends BorderPane {
-
-    public Button getbGrouper() {
-        return bGrouper;
-    }
     
+    private Treillis model;
     private Controleur controleur;
     
     private RadioButton rbSelect;
-    private RadioButton rbPoints;
-    private RadioButton rbSegments;
-    
-    private Button bGrouper;
-    private Button bCouleur;
+    private Button bTerrain;
+    private Button bNoeudAppui;
+    private Button bNoeudSimple;
     
     private DessinCanvas cDessin;
     
-
-    public MainPane(){
+    public MainPane(Treillis model){
+        
+        this.model = model; 
         this.controleur = new Controleur(this);
+        
         this.rbSelect = new RadioButton("Select");
-        //this.rbSelect.setOnAction((t) -> {
-            //this.controleur.boutonSelect(t); (action lorsque le bouton est appuyé)
-        //});
-        this.rbPoints = new RadioButton("Points");
-        this.rbSegments = new RadioButton("Segments");
+        this.rbSelect.setOnAction((t) -> {
+            this.controleur.boutonSelect(t); 
+        });
         
-        ToggleGroup bgEtat = new ToggleGroup();
-        this.rbSelect.setToggleGroup(bgEtat);
-        this.rbPoints.setToggleGroup(bgEtat);
-        this.rbSegments.setToggleGroup(bgEtat);
+        this.bTerrain = new Button("Terrain");
+        this.bTerrain.setOnAction((t) -> {
+            this.controleur.boutonTerrain(t); 
+        });
         
-        VBox vbGauche = new VBox(this.rbSelect, this.rbPoints, this.rbSegments);
+        this.bNoeudAppui = new Button("NoeudAppui");
+        this.bNoeudAppui.setOnAction((t) -> {
+            this.controleur.boutonNoeudAppui(t); 
+        });
+        
+        this.bNoeudSimple = new Button("NoeudSimple");
+        this.bNoeudSimple.setOnAction((t) -> {
+            this.controleur.boutonNoeudSimple(t); 
+        });
+        
+        //ToggleGroup bgEtat2 = new ToggleGroup();
+        //this.bTerrain.setToggleGroup(bgEtat2);
+        //this.bNoeudAppui.setToggleGroup(bgEtat2);
+        //this.bNoeudSimple.setToggleGroup(bgEtat2);
+        
+        VBox vbGauche = new VBox(this.rbSelect, this.bTerrain, this.bNoeudAppui, this.bNoeudSimple);
         this.setLeft(vbGauche);
-        
-        this.bGrouper = new Button("Grouper");
-        this.bGrouper.setOnAction(new EventHandler<ActionEvent>(){
-            public void handle(ActionEvent t){
-                System.out.println("bouton Grouper cliqué");
-            }
-        });
-        
-        this.bCouleur = new Button("Couleur");
-        this.bCouleur.setOnAction((t) -> {
-            System.out.println("bouton Couleur cliqué");
-        });
-        this.bCouleur.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent t){
-                System.out.println("la souris est passé sur Couleur en " + t.getX() + ", " + t.getY());
-            }
-        });
-        
-        
-        VBox vbDroite = new VBox(this.getbGrouper(), this.bCouleur);
-        this.setRight(vbDroite);
         
         this.cDessin = new DessinCanvas(this);
         this.setCenter(this.cDessin);
         
-        //this.controleur.changeEtat(30);
+        this.controleur.changeEtat(30);
     }  
     
     public void redrawAll(){
@@ -78,6 +68,16 @@ public class MainPane extends BorderPane {
     public Controleur getControleur() {
         return controleur;
     }
+
+
+    public Treillis getModel() {
+        return model;
+    }
+
+    public void setControleur(Controleur controleur) {
+        this.controleur = controleur;
+    }
+
 }
 
 

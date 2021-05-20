@@ -1,4 +1,5 @@
 package gui;
+import classes.Treillis;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -9,9 +10,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene sc = new Scene(new MainPane(), 800, 600);
+        Scene sc = new Scene(new MainPane(new Treillis()), 800, 600);
         stage.setScene(sc);
-          stage.show();
+        stage.show();
     }
 
     public static void main(String[] args) {

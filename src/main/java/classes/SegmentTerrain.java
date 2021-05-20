@@ -1,6 +1,8 @@
 package classes;
 
 import classes.Point;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class SegmentTerrain { 
     protected Point début ;
@@ -29,11 +31,25 @@ public class SegmentTerrain {
         }
     }
     
-    public SegmentTerrain (Noeuds N1, Noeuds N2) {
+    public SegmentTerrain(Noeuds N1, Noeuds N2) {
+        id++;
+        this.idST = id;
         Point P1 = new Point(N1.abscisse, N1.ordonnee); 
         Point P2 = new Point(N2.abscisse, N2.ordonnee); 
         this.début = P1;
         this.fin = P2;
         this.identificateur = id;
+    }
+    
+    public SegmentTerrain(Point début, Point fin){
+        id++;
+        this.idST = id;
+        this.début = début;
+        this.fin = fin;
+    }
+    
+    public void construire(GraphicsContext context){
+        context.setStroke(Color.BLUE);
+        context.strokeLine(this.début.px, this.début.py, this.fin.px, this.fin.py);
     }
 }

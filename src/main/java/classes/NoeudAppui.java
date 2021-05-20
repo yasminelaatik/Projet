@@ -13,4 +13,9 @@ public class NoeudAppui extends Noeuds {
         this.abscisse = alpha*ST.début.px + (1-alpha)*ST.fin.px ;
         this.ordonnee = alpha*ST.début.py + (1-alpha)*ST.fin.py ;
     }   
+    
+    public NoeudAppui(double abscisse, double ordonnee){
+        this.abscisse = abscisse;
+        this.ordonnee = ordonnee;
+    }
 }

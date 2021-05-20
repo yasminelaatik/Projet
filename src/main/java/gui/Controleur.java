@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.event.Event;
 import javafx.scene.input.MouseEvent;
 
 public class Controleur {
@@ -11,20 +12,35 @@ public class Controleur {
         this.vue = vue;
     }
     
+    public void boutonSelect(Event t){
+        System.out.println("1");
+    }
+    public void boutonTerrain(Event t){
+        System.out.println("2");
+        this.etat = 3;
+    }
+     public void boutonNoeudAppui(Event t){
+        System.out.println("3");
+    }
+    public void boutonNoeudSimple(Event t){
+        System.out.println("4");
+    }
+    
     public void changeEtat(int nouvelEtat){
-        if(nouvelEtat == 10){
-            this.vue.getbGrouper().setDisable(true);
-            //etc etc
-        }
+        //if(nouvelEtat == 10){
+            //this.vue.getModel().setDisable(true);
+        //}
         this.etat = nouvelEtat;
     }
 
     void clicDansZoneTerrain(MouseEvent t) {
-        //if(this.etat == 10) {
+        if(this.etat == 10) {
             double px = t.getX();
             double py = t.getY();
-            //truc avec Groupe model, sauf que Groupe on a pas
             this.vue.redrawAll();
-        //} //faire un else if pour chaque état, faire des this.vue.redrawAll() à chaque fois
+        }
+        else if(this.etat == 3) {
+            
+        }
     }
 }
