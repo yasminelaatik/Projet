@@ -1,10 +1,21 @@
+package classes;
+
 public class Noeuds {
     public int identificateur;
     private static int id = 0;
+    public double abscisse;
+    public double ordonnee;
     
     public Noeuds (){
         id++ ;
         this.identificateur = id;
+    }
+    
+    public Noeuds (double abscisse, double ordonnee){
+        id++ ;
+        this.identificateur = id;
+        this.abscisse = abscisse;
+        this.ordonnee = ordonnee;
     }
 
     public int getIdentificateur() {

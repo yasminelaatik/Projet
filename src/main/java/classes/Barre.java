@@ -1,3 +1,5 @@
+package classes;
+
 public class Barre {
     public int identificateur; 
     public Noeuds noeud1;

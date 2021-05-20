@@ -1,6 +1,6 @@
+package classes;
+
 public class NoeudSimple extends Noeuds {
-    public double abscisse;
-    public double ordonnee;
     
     public NoeudSimple (double abscisse, double ordonnee){
         if ((abscisse<Terrain.xmin)||(abscisse>Terrain.xmax)||(ordonnee<Terrain.ymin)||(ordonnee>Terrain.ymax)) {

@@ -1,3 +1,5 @@
+package classes;
+
 public class TriangleTerrain {
     public int idT ;
     protected Point PT0;

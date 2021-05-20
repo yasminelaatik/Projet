@@ -1,3 +1,8 @@
+package classes;
+
+
+import classes.Catalogue;
+
 public class TypeBarre {
     private int identificateur;
     private Double cout;

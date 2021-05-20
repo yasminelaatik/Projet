@@ -1,4 +1,6 @@
-public class Point {
+package classes;
+
+public class Point{
     public double px;
     public double py;
     
@@ -34,7 +36,6 @@ public class Point {
     public String toString() {
         return "(" + px + "," + py + ')';
     } 
-   
 }
     
      
