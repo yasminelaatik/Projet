@@ -1,16 +1,15 @@
 package classes;
 
+import static java.lang.Math.sqrt;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Point{
+public class Point extends Composants {
     public double px;
     public double py;
+    public Color c;
     
     public Point (double px, double py){
-        if ((px<Terrain.xmin)||(px>Terrain.xmax)||(py<Terrain.ymin)||(py>Terrain.ymax)) {
-            throw new Error("Vous ne pouvez pas construire de points ici") ;
-        }
         this.px = px;
         this.py = py;
     }
@@ -40,14 +39,20 @@ public class Point{
         return "(" + px + "," + py + ')';
     } 
     
-    public void construireNoeudSimple(GraphicsContext context){
-        context.setFill(Color.BLUE);
-        context.fillOval(this.px, this.py, 5, 5);
+    @Override
+    public void construire(GraphicsContext context){
+        context.setFill(Color.GREEN);
+        context.fillOval(this.px-1, this.py-1, 2, 2);
     }
     
-    public void construireNoeudAppui(GraphicsContext context){
-        context.setFill(Color.RED);
-        context.fillOval(this.px, this.py, 5, 5);
+    @Override
+    public void changerCouleur(Color c){
+    this.c = c;
+    }
+    
+    @Override
+    public double distance(Point p) {
+        return sqrt((this.getPx()-p.getPx())*(this.getPx()-p.getPx())+(this.getPy()-p.getPy())*(this.getPy()-p.getPy()));
     }
 }
     

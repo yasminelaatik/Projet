@@ -3,7 +3,7 @@ package classes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public abstract class TriangleTerrain extends Treillis{
+public class TriangleTerrain extends Composants {
     
     public int idT ;
     
@@ -14,6 +14,8 @@ public abstract class TriangleTerrain extends Treillis{
     protected SegmentTerrain ST1;
     protected SegmentTerrain ST2;
     protected SegmentTerrain ST3;
+    
+    public Color c;
     
     public TriangleTerrain (int idT, Point PT0, Point PT1, Point PT2) {
         this.idT = idT;
@@ -27,11 +29,34 @@ public abstract class TriangleTerrain extends Treillis{
         this.ST2 = ST2;
         this.ST3 = ST3;
     }
+    
+    public double min(double a, double b){
+        if(a<=b){
+            return a;
+        }
+        else{
+            return b;
+        }
+    }
    
+    @Override
     public void construire(GraphicsContext context){
-        double[] x ={this.PT0.px, this.PT1.px, this.PT2.px};
-        double[] y ={this.PT0.py, this.PT1.py, this.PT2.py};
+        double[] abscisses ={this.PT0.px, this.PT1.px, this.PT2.px};
+        double[] ordonnées ={this.PT0.py, this.PT1.py, this.PT2.py};
         context.setStroke(Color.BLUE);
-        context.strokePolygon(x,y,3);
+        context.strokePolygon(abscisses, ordonnées, 3);
+    }
+    
+    @Override
+    public void changerCouleur(Color c){
+        this.c = c;
+    }
+    
+    @Override
+    public double distance(Point p){
+        double d1 = ST1.distance(p);
+        double d2 = ST2.distance(p);
+        double d3 = ST3.distance(p);
+        return min(min(d1, d2), min(d2, d3));
     }
 }

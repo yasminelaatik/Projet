@@ -1,17 +1,22 @@
 package classes;
 
-public class Noeuds {
+import static java.lang.Math.sqrt;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+public class Noeuds extends Composants {
     public int identificateur;
     private static int id = 0;
     public double abscisse;
     public double ordonnee;
     
-    public Noeuds (){
-        id++ ;
+    public Color c;
+    
+    public Noeuds(){
+        id++;
         this.identificateur = id;
     }
-    
-    public Noeuds (double abscisse, double ordonnee){
+    public Noeuds(double abscisse, double ordonnee){
         id++ ;
         this.identificateur = id;
         this.abscisse = abscisse;
@@ -21,6 +26,14 @@ public class Noeuds {
     public int getIdentificateur() {
         return identificateur;
     }
+    
+    public double getAbscisse() {
+        return abscisse;
+    }
+    
+    public double getOrdonnee() {
+        return ordonnee;
+    }
 
     public void setIdentificateur(int identificateur) {
         this.identificateur = identificateur;
@@ -28,21 +41,23 @@ public class Noeuds {
 
     @Override
     public String toString() {
-        return "Noeuds{identificateur=" + identificateur + '}';
+        return ("Noeud numéro " + identificateur);
+    } 
+    
+    @Override
+    public void construire(GraphicsContext context){
+        context.setFill(this.c);
+        context.fillOval(this.abscisse-2.5, this.ordonnee-2.5, 5, 5);
     }
     
-    /*public static void main (String args[]) {
-        Noeuds N1 = new Noeuds();
-        System.out.println(N1.identificateur) ;
-        Noeuds N2 = new Noeuds();
-        System.out.println(N2.identificateur) ;
-        
-        NoeudSimple NS3 = new NoeudSimple(3, 8) ;
-        System.out.println(NS3.identificateur) ;
-        
-        NoeudAppui NA4 = new NoeudAppui(13, 75, 12);
-        System.out.println(NA4.identificateur) ;
+    @Override
+    public void changerCouleur(Color c){
+        this.c = c;
     }
-    */
     
+    @Override
+    public double distance(Point p){
+        return sqrt((this.getAbscisse()-p.getPx())*(this.getAbscisse()-p.getPx())+(this.getOrdonnee()-p.getPy())*(this.getOrdonnee()-p.getPy()));
+    }
 }
+

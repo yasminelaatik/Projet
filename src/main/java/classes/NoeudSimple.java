@@ -1,24 +1,30 @@
 package classes;
 
+import static java.lang.Math.sqrt;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class NoeudSimple extends Noeuds {
     
-    public NoeudSimple (double abscisse, double ordonnee){
-        if ((abscisse<Terrain.xmin)||(abscisse>Terrain.xmax)||(ordonnee<Terrain.ymin)||(ordonnee>Terrain.ymax)) {
-            throw new Error("Vous ne pouvez pas construire de points ici") ;
-        }
+    public NoeudSimple(double abscisse, double ordonnee){
         this.abscisse = abscisse;
         this.ordonnee = ordonnee;
+        this.c = Color.BLUE;
     }
     
-    /*public static void main (String args[]) {
-        NoeudSimple NS1 = new NoeudSimple(3, 8) ;
-        System.out.println(NS1.identificateur) ;
-        System.out.println(NS1.abscisse) ;
-        System.out.println(NS1.ordonnee) ;
-        NoeudSimple NS2 = new NoeudSimple(-9, 4) ;
-        System.out.println(NS2.identificateur) ;
-        System.out.println(NS2.abscisse) ;
-        System.out.println(NS2.ordonnee) ;
+    @Override
+    public void construire(GraphicsContext context){
+        context.setFill(this.c);
+        context.fillOval(this.getAbscisse()-2.5, this.getOrdonnee()-2.5, 5, 5);
     }
-    */
+    
+    @Override
+    public void changerCouleur(Color c){
+        this.c = c;
+    }
+    
+    @Override
+    public double distance(Point p){
+        return sqrt((this.getAbscisse()-p.getPx())*(this.getAbscisse()-p.getPx())+(this.getOrdonnee()-p.getPy())*(this.getOrdonnee()-p.getPy()));
+    }
 }

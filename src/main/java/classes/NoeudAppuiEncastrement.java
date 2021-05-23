@@ -4,9 +4,9 @@ import static java.lang.Math.sqrt;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class NoeudAppuiSimple extends NoeudAppui {
+public class NoeudAppuiEncastrement extends NoeudAppui {
     
-    public NoeudAppuiSimple(double abscisse, double ordonnee) {
+    public NoeudAppuiEncastrement(double abscisse, double ordonnee) {
         super(abscisse, ordonnee);
         this.c = Color.BLUE;
     }

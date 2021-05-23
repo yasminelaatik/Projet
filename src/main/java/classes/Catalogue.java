@@ -12,7 +12,7 @@ public class Catalogue {
     public static HashMap<String, List<Double>> béton = new HashMap<>() ;
     public static HashMap<String, List<Double>> bronze = new HashMap<>() ;
             
-    /*public static void main(String[] args) {
+    public void Catalogue(){
         HashMap<Integer, String> catalogue = new HashMap<>() ; 
         catalogue.put(1, "acier") ;
         catalogue.put(2, "bois") ;
@@ -39,5 +39,4 @@ public class Catalogue {
         bronze.put("béton", caracbronze) ;
         
     }
-    */
 }

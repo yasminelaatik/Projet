@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene sc = new Scene(new MainPane(new Treillis()), 800, 600);
+        Scene sc = new Scene(new MainPane(new Treillis()), 0, 0);
         stage.setScene(sc);
         stage.show();
     }
