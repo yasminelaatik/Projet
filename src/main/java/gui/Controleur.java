@@ -18,6 +18,7 @@ import classes.SegmentTerrain;
 import classes.Noeuds;
 import classes.Composants;
 import classes.Barre;
+import classes.TriangleTerrain;
 
 public class Controleur {
     
@@ -61,9 +62,11 @@ public class Controleur {
     public void boutonSelectNoeuds(Event t){
         this.changeEtat(60);}
     public void boutonSegmentTerrain(Event t){
-        this.changeEtat(70);}   
-    public void boutonSimulation(Event t){
+        this.changeEtat(70);}  
+    public void boutonTriangleTerrain(Event t){
         this.changeEtat(80);}
+    public void boutonSimulation(Event t){
+        this.changeEtat(90);}
     
     public void changeEtat(int nouvelEtat){
           
@@ -76,7 +79,9 @@ public class Controleur {
             this.vue.getRbSelectNoeuds().setDisable(true);
             this.vue.getbSegmentTerrain().setDisable(true);
             this.vue.getbSimulation().setDisable(true); 
+            this.vue.getRbTriangleTerrain().setDisable(true);
             this.vue.getRbTerrain().setSelected(true);
+            
             this.etat = 10;
             
         } else if(nouvelEtat == 11) {
@@ -88,6 +93,7 @@ public class Controleur {
             this.vue.getRbAppuiDouble().setDisable(false);
             this.vue.getRbEncastrement().setDisable(false);
             this.vue.getRbNoeudSimple().setDisable(false);
+            this.vue.getRbTriangleTerrain().setDisable(false);
             this.vue.getRbSelectNoeuds().setDisable(true);
             this.vue.getbSegmentTerrain().setDisable(true);
             this.vue.getbSimulation().setDisable(true);
@@ -119,6 +125,9 @@ public class Controleur {
             changeEtat(60);
             
         } else if(nouvelEtat == 80) {
+            this.etat = 80;
+
+        } else if(nouvelEtat == 90) {
             this.vue.getRbTerrain().setDisable(true);
             this.vue.getRbAppuiSimple().setDisable(true);
             this.vue.getRbAppuiDouble().setDisable(true);
@@ -128,7 +137,7 @@ public class Controleur {
             this.vue.getbSegmentTerrain().setDisable(true);
             this.vue.getbSimulation().setDisable(true);
             //forces
-            this.etat = 80;
+            this.etat = 90;
         }
     }
 
@@ -247,7 +256,7 @@ public class Controleur {
             this.vue.getRbSelectNoeuds().setDisable(false);
             
         } else if (this.etat == 50) { 
-            if((t.getX()>Terrain.getXmin())&&(t.getX()<Terrain.getXmax())&&(t.getY()>Terrain.getYmin())&&(t.getY()<Terrain.getYmax())) {
+            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
                 Treillis model = this.vue.getModel();
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
@@ -281,6 +290,48 @@ public class Controleur {
             this.vue.getbSegmentTerrain().setDisable(false);
             
         } else if (this.etat == 80) {
+            this.P1 = new Point(t.getX(), t.getY());
+            Treillis model = this.vue.getModel();
+            if(sélectionnerNoeud(P1) != null){
+                this.P1 = new Point(sélectionnerNoeud(P1).getAbscisse(), sélectionnerNoeud(P1).getOrdonnee());
+            }
+            else{
+                NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
+                model.add(NS);
+                listeNoeuds.add(NS);
+            }
+            this.vue.redrawAll();
+            this.etat = 81;
+            
+        } else if (this.etat == 81) {
+            this.P2 = new Point(t.getX(), t.getY());
+            Treillis model = this.vue.getModel();
+            if(sélectionnerNoeud(P2) != null){
+                this.P2 = new Point(sélectionnerNoeud(P2).getAbscisse(), sélectionnerNoeud(P2).getOrdonnee());
+            }
+            else{
+                NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
+                model.add(NS);
+                listeNoeuds.add(NS);
+            }
+            this.vue.redrawAll();
+            this.etat = 82;
+            
+        } else if (this.etat == 82) {
+            this.P3 = new Point(t.getX(), t.getY());
+            Treillis model = this.vue.getModel();
+            if(sélectionnerNoeud(P3) != null){
+                this.P3 = new Point(sélectionnerNoeud(P3).getAbscisse(), sélectionnerNoeud(P3).getOrdonnee());
+            }
+            else{
+                NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
+                model.add(NS);
+                listeNoeuds.add(NS);
+            }
+            model.add(new TriangleTerrain(P1, P2, P3));
+            this.vue.redrawAll();
+            this.etat = 80;
+            
             
         }
     }

@@ -46,8 +46,6 @@ public class Noeuds extends Composants {
     
     @Override
     public void construire(GraphicsContext context){
-        context.setFill(this.c);
-        context.fillOval(this.abscisse-2.5, this.ordonnee-2.5, 5, 5);
     }
     
     @Override

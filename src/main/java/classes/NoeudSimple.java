@@ -15,7 +15,7 @@ public class NoeudSimple extends Noeuds {
     @Override
     public void construire(GraphicsContext context){
         context.setFill(this.c);
-        context.fillOval(this.getAbscisse()-2.5, this.getOrdonnee()-2.5, 5, 5);
+        context.fillOval(this.getAbscisse()-3.5, this.getOrdonnee()-3.5, 7, 7);
     }
     
     @Override

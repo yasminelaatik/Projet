@@ -42,7 +42,7 @@ public class Point extends Composants {
     @Override
     public void construire(GraphicsContext context){
         context.setFill(Color.GREEN);
-        context.fillOval(this.px-1, this.py-1, 2, 2);
+        context.fillOval(this.px-0.5, this.py-0.5, 1, 1);
     }
     
     @Override

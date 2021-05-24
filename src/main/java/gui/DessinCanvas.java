@@ -48,7 +48,7 @@ public class DessinCanvas extends Pane{
         Scanner sc = new Scanner(System.in);
         
         if(sc.nextLine().equals("acier")){
-            return Color.GREY;
+            return Color.BLUE;
         }
         else if(sc.nextLine().equals("bois")){
             return Color.BROWN;
@@ -82,6 +82,8 @@ public class DessinCanvas extends Pane{
     public void redrawAll(){
         GraphicsContext context = this.realCanvas.getGraphicsContext2D();
         Treillis model = this.main.getModel();
+        context.setFill(Color.WHITE);
+        context.fillRect(0, 0, this.getWidth(), this.getHeight());
         model.changerCouleur(this.couleur);
         Controleur control = this.main.getControleur();
         if(control.getSelectionNoeuds().size() >= 2){
