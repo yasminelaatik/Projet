@@ -41,6 +41,10 @@ public class Controleur {
     private List<Noeuds> selectionNoeuds;
     private List<Noeuds> listeNoeuds;
     private List<Noeuds> listeNoeudsPourSegment;
+    //attributs pour Barres
+    private Noeuds N1;
+    private Noeuds N2;
+    private Noeuds N3;
     
     public Controleur(MainPane vue){
         this.vue = vue;
@@ -294,11 +298,13 @@ public class Controleur {
             Treillis model = this.vue.getModel();
             if(sélectionnerNoeud(P1) != null){
                 this.P1 = new Point(sélectionnerNoeud(P1).getAbscisse(), sélectionnerNoeud(P1).getOrdonnee());
+                this.N1 = sélectionnerNoeud(P1);
             }
             else{
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
                 listeNoeuds.add(NS);
+                this.N1 = NS;
             }
             this.vue.redrawAll();
             this.etat = 81;
@@ -308,11 +314,13 @@ public class Controleur {
             Treillis model = this.vue.getModel();
             if(sélectionnerNoeud(P2) != null){
                 this.P2 = new Point(sélectionnerNoeud(P2).getAbscisse(), sélectionnerNoeud(P2).getOrdonnee());
+                this.N2 = sélectionnerNoeud(P2);
             }
             else{
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
                 listeNoeuds.add(NS);
+                this.N2 = NS;
             }
             this.vue.redrawAll();
             this.etat = 82;
@@ -322,13 +330,18 @@ public class Controleur {
             Treillis model = this.vue.getModel();
             if(sélectionnerNoeud(P3) != null){
                 this.P3 = new Point(sélectionnerNoeud(P3).getAbscisse(), sélectionnerNoeud(P3).getOrdonnee());
+                this.N3 = sélectionnerNoeud(P3);
             }
             else{
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
                 listeNoeuds.add(NS);
+                this.N3 = NS;
             }
             model.add(new TriangleTerrain(P1, P2, P3));
+            model.add(new Barre(this.N1, this.N2));
+            model.add(new Barre(this.N2, this.N3));
+            model.add(new Barre(this.N3, this.N1));
             this.vue.redrawAll();
             this.etat = 80;
             
