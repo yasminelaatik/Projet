@@ -23,8 +23,12 @@ public class Noeuds extends Composants {
         this.ordonnee = ordonnee;
     }
 
-    public int getIdentificateur() {
+    public int getIdT() {
         return identificateur;
+    }
+    
+    public void setIdT(int idt){
+        this.identificateur = idt;
     }
     
     public double getAbscisse() {

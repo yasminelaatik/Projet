@@ -36,6 +36,17 @@ public class DessinCanvas extends Pane{
             Controleur control = this.main.getControleur();
             control.clicDansZoneTerrain(t);
         });
+        /*
+        this.realCanvas.setOnMouseEntered((t) -> {
+            Controleur control = this.main.getControleur();
+            control.déplacementSouris(t);
+        });
+        */
+        this.realCanvas.setOnMouseMoved((t) -> {
+            Controleur control = this.main.getControleur();
+            control.déplacementSouris(t);
+        });
+        
     }
     
     public Color choixTypeBarre(){

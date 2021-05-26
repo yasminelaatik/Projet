@@ -5,10 +5,10 @@ import javafx.scene.paint.Color;
 
 public class Terrain extends Composants {
 
-    private static double xmin ;
-    private static double xmax ;
-    private static double ymin ;
-    private static double ymax ;
+    public static double xmin ;
+    public static double xmax ;
+    public static double ymin ;
+    public static double ymax ;
     public Color c;
     
     public Terrain(double xmin, double xmax, double ymin, double ymax) {
@@ -43,7 +43,7 @@ public class Terrain extends Composants {
     @Override
     public void construire(GraphicsContext context){
         context.setStroke(this.c);
-        context.strokeRect(this.xmin, this.ymin, (this.xmax-this.xmin), (this.ymax-this.ymin));
+        context.strokeRect(Terrain.xmin, Terrain.ymin, (Terrain.xmax-Terrain.xmin), (Terrain.ymax-Terrain.ymin));
     }
     
     @Override
@@ -52,10 +52,10 @@ public class Terrain extends Composants {
     
     @Override
     public double distance(Point p){
-        double d1 = new SegmentTerrain(new Point(this.xmin, this.ymin), new Point(this.xmax, this.ymin)).distance(p);
-        double d2 = new SegmentTerrain(new Point(this.xmax, this.ymin), new Point(this.xmax, this.ymax)).distance(p);
-        double d3 = new SegmentTerrain(new Point(this.xmax, this.ymax), new Point(this.xmin, this.ymax)).distance(p);
-        double d4 = new SegmentTerrain(new Point(this.xmin, this.ymax), new Point(this.xmin, this.ymin)).distance(p);
+        double d1 = new SegmentTerrain(new Point(Terrain.xmin, Terrain.ymin), new Point(Terrain.xmax, Terrain.ymin)).distance(p);
+        double d2 = new SegmentTerrain(new Point(Terrain.xmax, Terrain.ymin), new Point(Terrain.xmax, Terrain.ymax)).distance(p);
+        double d3 = new SegmentTerrain(new Point(Terrain.xmax, Terrain.ymax), new Point(Terrain.xmin, Terrain.ymax)).distance(p);
+        double d4 = new SegmentTerrain(new Point(Terrain.xmin, Terrain.ymax), new Point(Terrain.xmin, Terrain.ymin)).distance(p);
         
         return min(min(d1,d2), min(d3, d4));
     }
