@@ -8,7 +8,6 @@ public class NoeudAppuiDouble extends NoeudAppui {
     
     public NoeudAppuiDouble(double abscisse, double ordonnee) {
         super(abscisse, ordonnee);
-        this.c = Color.BLUE;
     }
     
     @Override
@@ -22,7 +21,7 @@ public class NoeudAppuiDouble extends NoeudAppui {
         context.setStroke(Color.BLACK);
         context.strokePolygon(doubles, doubles1, 3);
         
-        context.setStroke(Color.BLUE);
+        context.setStroke(this.c);
         context.strokeLine(this.abscisse-12.5, this.ordonnee+15, this.abscisse+12.5, this.ordonnee+15);
         
         context.strokeLine(this.abscisse+12.5, this.ordonnee+15, this.abscisse+7.5, this.ordonnee+18);
@@ -31,12 +30,10 @@ public class NoeudAppuiDouble extends NoeudAppui {
         context.strokeLine(this.abscisse-2.5, this.ordonnee+15, this.abscisse-7.5, this.ordonnee+18);
         context.strokeLine(this.abscisse-7.5, this.ordonnee+15, this.abscisse-12.5, this.ordonnee+18);
     }
-    
     @Override
     public void changerCouleur(Color c){
         this.c = c;
     }
-    
     @Override
     public double distance(Point p){
         return sqrt((this.getAbscisse()-p.getPx())*(this.getAbscisse()-p.getPx())+(this.getOrdonnee()-p.getPy())*(this.getOrdonnee()-p.getPy()));

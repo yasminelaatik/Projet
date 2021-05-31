@@ -36,12 +36,7 @@ public class DessinCanvas extends Pane{
             Controleur control = this.main.getControleur();
             control.clicDansZoneTerrain(t);
         });
-        /*
-        this.realCanvas.setOnMouseEntered((t) -> {
-            Controleur control = this.main.getControleur();
-            control.déplacementSouris(t);
-        });
-        */
+       
         this.realCanvas.setOnMouseMoved((t) -> {
             Controleur control = this.main.getControleur();
             control.déplacementSouris(t);
@@ -59,7 +54,6 @@ public class DessinCanvas extends Pane{
         int matériau = Lire.i();
         if(matériau == 1){
             return Color.BLUE;
-            
         }
         else if(matériau == 2){
             return Color.BROWN;
@@ -81,8 +75,10 @@ public class DessinCanvas extends Pane{
     public void redrawAll(){
         GraphicsContext context = this.realCanvas.getGraphicsContext2D();
         Treillis model = this.main.getModel();
+        
         context.setFill(Color.WHITE);
         context.fillRect(0, 0, this.getWidth(), this.getHeight());
+        
         model.changerCouleur(this.couleur);
         Controleur control = this.main.getControleur();
         if(control.getSelectionNoeuds().size() >= 2){
@@ -90,5 +86,9 @@ public class DessinCanvas extends Pane{
             control.getSelectionNoeuds().get(control.getSelectionNoeuds().size()-1).changerCouleur(Color.CYAN);
         }
         model.construire(context);
+    }
+    
+    public Color getCouleur() {
+        return this.couleur;
     }
 }

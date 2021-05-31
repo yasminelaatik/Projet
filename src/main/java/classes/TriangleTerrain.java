@@ -5,8 +5,6 @@ import javafx.scene.paint.Color;
 
 public class TriangleTerrain extends Composants {
     
-    public static int idT = 0;
-    
     protected Point PT0;
     protected Point PT1;
     protected Point PT2;
@@ -15,20 +13,19 @@ public class TriangleTerrain extends Composants {
     protected SegmentTerrain ST2;
     protected SegmentTerrain ST3;
     
-    public Color c;
+    public int identificateur;
+    private static int id = 0;
     
     public TriangleTerrain (Point PT0, Point PT1, Point PT2) {
-        idT++;
-        this.idT = idT;
+        id++;
+        this.identificateur = id;
+        
         this.PT0 = PT0;
         this.PT1 = PT1;
         this.PT2 = PT2;
-        SegmentTerrain ST1 = new SegmentTerrain(PT0, PT1);
-        SegmentTerrain ST2 = new SegmentTerrain(PT1, PT2);
-        SegmentTerrain ST3 = new SegmentTerrain(PT2, PT0);
-        this.ST1 = ST1;
-        this.ST2 = ST2;
-        this.ST3 = ST3;
+        this.ST1 = new SegmentTerrain(PT0, PT1);
+        this.ST2 = new SegmentTerrain(PT1, PT2);
+        this.ST3 = new SegmentTerrain(PT2, PT0);
     }
     
     public double min(double a, double b){
@@ -42,17 +39,15 @@ public class TriangleTerrain extends Composants {
    
     @Override
     public void construire(GraphicsContext context){
-        double[] abscisses ={this.PT0.px, this.PT1.px, this.PT2.px};
-        double[] ordonnées ={this.PT0.py, this.PT1.py, this.PT2.py};
-        context.setStroke(this.c);
+        double[] abscisses = {this.PT0.px, this.PT1.px, this.PT2.px};
+        double[] ordonnées = {this.PT0.py, this.PT1.py, this.PT2.py};
+        context.setStroke(Color.LIMEGREEN);
         context.strokePolygon(abscisses, ordonnées, 3);
     }
-    
     @Override
     public void changerCouleur(Color c){
-        this.c = c;
+        //la couleur du riangle terrain ne dépend du type de barre
     }
-    
     @Override
     public double distance(Point p){
         double d1 = ST1.distance(p);

@@ -19,7 +19,7 @@ public class MainPane extends BorderPane {
     private RadioButton rbNoeudSimple;
     private RadioButton rbSelectNoeuds;
     private RadioButton rbTriangleTerrain;
-    private Button bSegmentTerrain;
+    private Button bBarre;
     private Button bSauvegarde;
     
     private DessinCanvas cDessin;
@@ -57,9 +57,9 @@ public class MainPane extends BorderPane {
         this.rbTriangleTerrain.setOnAction((t) -> {
             this.controleur.boutonTriangleTerrain(t); 
         });
-        this.bSegmentTerrain = new Button("Créer un Segment Terrain");
-        this.bSegmentTerrain.setOnAction((t) -> {
-            this.controleur.boutonSegmentTerrain(t); 
+        this.bBarre = new Button("Créer une Barre");
+        this.bBarre.setOnAction((t) -> {
+            this.controleur.boutonBarre(t); 
         });
         this.bSauvegarde = new Button("Sauvegarde");
         this.bSauvegarde.setOnAction((t) -> {
@@ -75,7 +75,7 @@ public class MainPane extends BorderPane {
         this.rbSelectNoeuds.setToggleGroup(bgEtat);
         this.rbTriangleTerrain.setToggleGroup(bgEtat);
         
-        VBox vbGauche = new VBox(this.rbTerrain, this.rbAppuiSimple, this.rbAppuiDouble, this.rbEncastrement, this.rbNoeudSimple, this.rbSelectNoeuds, this.rbTriangleTerrain, this.bSegmentTerrain, this.bSauvegarde);
+        VBox vbGauche = new VBox(this.rbTerrain, this.rbAppuiSimple, this.rbAppuiDouble, this.rbEncastrement, this.rbNoeudSimple, this.rbSelectNoeuds, this.rbTriangleTerrain, this.bBarre, this.bSauvegarde);
         this.setLeft(vbGauche);
         
         this.cDessin = new DessinCanvas(this);
@@ -95,7 +95,9 @@ public class MainPane extends BorderPane {
     public void setControleur(Controleur controleur) {
         this.controleur = controleur;
     }
-    
+    public DessinCanvas getcDessin() {
+        return cDessin;
+    }
     public RadioButton getRbTerrain() {
         return rbTerrain;
     }
@@ -114,8 +116,8 @@ public class MainPane extends BorderPane {
     public RadioButton getRbSelectNoeuds() {
         return rbSelectNoeuds;
     }
-    public Button getbSegmentTerrain() {
-        return bSegmentTerrain;
+    public Button getbBarre() {
+        return bBarre;
     }
     public RadioButton getRbTriangleTerrain() {
         return rbTriangleTerrain;

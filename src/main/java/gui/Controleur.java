@@ -19,7 +19,6 @@ import classes.Noeuds;
 import classes.Composants;
 import classes.Barre;
 import classes.TriangleTerrain;
-import java.io.File;
 
 public class Controleur {
     
@@ -27,7 +26,7 @@ public class Controleur {
     private int etat;
     
     //attribut pour le type de matériau et la couleur du treillis
-    private String matériau;
+    private int typeBarre;
     //attributs pour Terrain
     private Point P1;
     private Point P2;
@@ -42,10 +41,6 @@ public class Controleur {
     private List<Noeuds> selectionNoeuds;
     private List<Noeuds> listeNoeuds;
     private List<Noeuds> listeNoeudsPourSegment;
-    //attributs pour Barres
-    private Noeuds N1;
-    private Noeuds N2;
-    private Noeuds N3;
     
     public Controleur(MainPane vue){
         this.vue = vue;
@@ -66,7 +61,7 @@ public class Controleur {
         this.changeEtat(50);}
     public void boutonSelectNoeuds(Event t){
         this.changeEtat(60);}
-    public void boutonSegmentTerrain(Event t){
+    public void boutonBarre(Event t){
         this.changeEtat(70);}  
     public void boutonTriangleTerrain(Event t){
         this.changeEtat(80);}
@@ -76,17 +71,18 @@ public class Controleur {
     public void changeEtat(int nouvelEtat){
           
         if(nouvelEtat == 10) {
+            this.typeBarre = matériau();
+            
             this.vue.getRbTerrain().setDisable(false);
             this.vue.getRbAppuiSimple().setDisable(true);
             this.vue.getRbAppuiDouble().setDisable(true);
             this.vue.getRbEncastrement().setDisable(true);
             this.vue.getRbNoeudSimple().setDisable(true);
             this.vue.getRbSelectNoeuds().setDisable(true);
-            this.vue.getbSegmentTerrain().setDisable(true);
+            this.vue.getbBarre().setDisable(true);
             this.vue.getbSauvegarde().setDisable(true); 
             this.vue.getRbTriangleTerrain().setDisable(true);
             this.vue.getRbTerrain().setSelected(true);
-            
             this.etat = 10;
             
         } else if(nouvelEtat == 11) {
@@ -100,7 +96,7 @@ public class Controleur {
             this.vue.getRbNoeudSimple().setDisable(false);
             this.vue.getRbTriangleTerrain().setDisable(false);
             this.vue.getRbSelectNoeuds().setDisable(true);
-            this.vue.getbSegmentTerrain().setDisable(true);
+            this.vue.getbBarre().setDisable(true);
             this.vue.getbSauvegarde().setDisable(true);
             this.vue.getRbAppuiSimple().setSelected(true);
             this.etat = 20;
@@ -119,12 +115,11 @@ public class Controleur {
 
         } else if(nouvelEtat == 70) {
             
-            int taille  = getSelectionNoeuds().size();
-            Point P1 = new Point(getSelectionNoeuds().get(taille-2).getAbscisse(), getSelectionNoeuds().get(taille-2).getOrdonnee());
-            Point P2 = new Point(getSelectionNoeuds().get(taille-1).getAbscisse(), getSelectionNoeuds().get(taille-1).getOrdonnee());
+            int taille = getSelectionNoeuds().size();
             Treillis model = this.vue.getModel();
-            model.add(new SegmentTerrain(P1, P2));
-            model.add(new Barre(getSelectionNoeuds().get(taille-2), getSelectionNoeuds().get(taille-1)));
+            Barre B = new Barre(getSelectionNoeuds().get(taille-2), getSelectionNoeuds().get(taille-1), typeBarre);
+            model.add(B);
+            model.addB(B);
             this.vue.redrawAll();
             this.vue.getbSauvegarde().setDisable(false);
             changeEtat(60);
@@ -183,16 +178,16 @@ public class Controleur {
             NoeudAppuiSimple NAS;
             Point clic = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(clic);
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAS = new NoeudAppuiSimple(t.getX(), this.P1.py);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAS = new NoeudAppuiSimple(this.P2.px, t.getY());
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAS = new NoeudAppuiSimple(t.getX(), this.P3.py);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAS = new NoeudAppuiSimple(this.P4.px, t.getY());
             }
             else{
@@ -200,6 +195,7 @@ public class Controleur {
             }
             Treillis model = this.vue.getModel();
             model.add(NAS);
+            model.addN(NAS);
             listeNoeuds.add(NAS);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
@@ -209,16 +205,16 @@ public class Controleur {
             NoeudAppuiDouble NAD;
             Point clic = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(clic);
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAD = new NoeudAppuiDouble(t.getX(), this.P1.py);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAD = new NoeudAppuiDouble(this.P2.px, t.getY());
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAD = new NoeudAppuiDouble(t.getX(), this.P3.py);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAD = new NoeudAppuiDouble(this.P4.px, t.getY());
             }
             else{
@@ -226,6 +222,7 @@ public class Controleur {
             }
             Treillis model = this.vue.getModel();
             model.add(NAD);
+            model.addN(NAD);
             listeNoeuds.add(NAD);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
@@ -235,16 +232,16 @@ public class Controleur {
             NoeudAppuiEncastrement NAE;
             Point clic = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(clic);
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAE = new NoeudAppuiEncastrement(t.getX(), this.P1.py);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAE = new NoeudAppuiEncastrement(this.P2.px, t.getY());
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NAE = new NoeudAppuiEncastrement(t.getX(), this.P3.py);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NAE = new NoeudAppuiEncastrement(this.P4.px, t.getY());
             }
             else{
@@ -252,16 +249,18 @@ public class Controleur {
             }
             Treillis model = this.vue.getModel();
             model.add(NAE);
+            model.addN(NAE);
             listeNoeuds.add(NAE);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
             this.vue.getbSauvegarde().setDisable(false);
             
         } else if (this.etat == 50) { 
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
+            if((t.getX()>T.getXmin()+20)&&(t.getX()<T.getXmax()-20)&&(t.getY()>T.getYmin()+20)&&(t.getY()<T.getYmax()-20)) {
                 Treillis model = this.vue.getModel();
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
+                model.addN(NS);
                 listeNoeuds.add(NS);
                 this.vue.redrawAll();
                 this.vue.getRbSelectNoeuds().setDisable(false);
@@ -280,7 +279,6 @@ public class Controleur {
                 }
                 getSelectionNoeuds().add(candidat);
             }
-            
             int tailleS = getSelectionNoeuds().size();
             if (tailleS >= 2){
                 for (int i = 0 ; i < tailleS ; i++){
@@ -290,62 +288,47 @@ public class Controleur {
                 getSelectionNoeuds().get(tailleS-1).changerCouleur(Color.CYAN);
             }
             this.vue.redrawAll();
-            this.vue.getbSegmentTerrain().setDisable(false);
+            this.vue.getbBarre().setDisable(false);
             
         } else if (this.etat == 80) {
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
+            if((t.getX()>T.getXmin())&&(t.getX()<T.getXmax())&&(t.getY()>T.getYmin())&&(t.getY()<T.getYmax())) {
                 this.P1 = new Point(t.getX(), t.getY());
-                Treillis model = this.vue.getModel();
                 if(sélectionnerNoeud(P1) != null){
                     this.P1 = new Point(sélectionnerNoeud(P1).getAbscisse(), sélectionnerNoeud(P1).getOrdonnee());
-                    this.N1 = sélectionnerNoeud(P1);
                 }
                 else{
-                    NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
-                    model.add(NS);
-                    listeNoeuds.add(NS);
-                    this.N1 = NS;
+                    Treillis model = this.vue.getModel();
+                    model.add(this.P1);
+                    this.vue.redrawAll();
                 }
-                this.vue.redrawAll();
                 this.etat = 81;
             }
             
         } else if (this.etat == 81) {
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
+            if((t.getX()>T.getXmin())&&(t.getX()<T.getXmax())&&(t.getY()>T.getYmin())&&(t.getY()<T.getYmax())) {
                 this.P2 = new Point(t.getX(), t.getY());
-                Treillis model = this.vue.getModel();
                 if(sélectionnerNoeud(P2) != null){
                     this.P2 = new Point(sélectionnerNoeud(P2).getAbscisse(), sélectionnerNoeud(P2).getOrdonnee());
-                    this.N2 = sélectionnerNoeud(P2);
                 }
                 else{
-                    NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
-                    model.add(NS);
-                    listeNoeuds.add(NS);
-                    this.N2 = NS;
+                    Treillis model = this.vue.getModel();
+                    model.add(this.P2);
+                    this.vue.redrawAll();
                 }
-                this.vue.redrawAll();
                 this.etat = 82;
             }
             
         } else if (this.etat == 82) {
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
+            if((t.getX()>T.getXmin())&&(t.getX()<T.getXmax())&&(t.getY()>T.getYmin())&&(t.getY()<T.getYmax())) {
                 this.P3 = new Point(t.getX(), t.getY());
                 Treillis model = this.vue.getModel();
                 if(sélectionnerNoeud(P3) != null){
                     this.P3 = new Point(sélectionnerNoeud(P3).getAbscisse(), sélectionnerNoeud(P3).getOrdonnee());
-                    this.N3 = sélectionnerNoeud(P3);
                 }
                 else{
-                    NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
-                    model.add(NS);
-                    listeNoeuds.add(NS);
-                    this.N3 = NS;
+                    model.add(this.P3);
                 }
                 model.add(new TriangleTerrain(P1, P2, P3));
-                model.add(new Barre(this.N1, this.N2));
-                model.add(new Barre(this.N2, this.N3));
-                model.add(new Barre(this.N3, this.N1));
                 this.vue.redrawAll();
                 this.vue.getbSauvegarde().setDisable(false);
                 this.etat = 80;
@@ -360,7 +343,7 @@ public class Controleur {
             double xmax = max(this.P1.px, P.px);
             double ymin = min(this.P1.py, P.py);
             double ymax = max(this.P1.py, P.py);
-            Terrain T = new Terrain(xmin, xmax, ymin, ymax);
+            this.T = new Terrain(xmin, xmax, ymin, ymax);
             
             Treillis model = this.vue.getModel();
             model.add(T);
@@ -372,25 +355,25 @@ public class Controleur {
             Point emplacement = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(emplacement);
             
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiSimple NAS = new NoeudAppuiSimple(t.getX(), this.P1.py);
                 model.add(NAS);
                 this.vue.redrawAll();
                 model.remove(NAS);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiSimple NAS = new NoeudAppuiSimple(this.P2.px, t.getY());
                 model.add(NAS);
                 this.vue.redrawAll();
                 model.remove(NAS);
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiSimple NAS = new NoeudAppuiSimple(t.getX(), this.P3.py);
                 model.add(NAS);
                 this.vue.redrawAll();
                 model.remove(NAS);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiSimple NAS = new NoeudAppuiSimple(this.P4.px, t.getY());
                 model.add(NAS);
                 this.vue.redrawAll();
@@ -405,25 +388,25 @@ public class Controleur {
             Point emplacement = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(emplacement);
             
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiDouble NAD = new NoeudAppuiDouble(t.getX(), this.P1.py);
                 model.add(NAD);
                 this.vue.redrawAll();
                 model.remove(NAD);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiDouble NAD = new NoeudAppuiDouble(this.P2.px, t.getY());
                 model.add(NAD);
                 this.vue.redrawAll();
                 model.remove(NAD);
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiDouble NAD = new NoeudAppuiDouble(t.getX(), this.P3.py);
                 model.add(NAD);
                 this.vue.redrawAll();
                 model.remove(NAD);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiDouble NAD = new NoeudAppuiDouble(this.P4.px, t.getY());
                 model.add(NAD);
                 this.vue.redrawAll();
@@ -438,25 +421,25 @@ public class Controleur {
             Point emplacement = new Point(t.getX(), t.getY());
             SegmentTerrain SegmentPlusProche = placementAppui(emplacement);
             
-            if((SegmentPlusProche == this.ST1)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            if((SegmentPlusProche == this.ST1)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiEncastrement NAE = new NoeudAppuiEncastrement(t.getX(), this.P1.py);
                 model.add(NAE);
                 this.vue.redrawAll();
                 model.remove(NAE);
             }
-            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST2)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiEncastrement NAE = new NoeudAppuiEncastrement(this.P2.px, t.getY());
                 model.add(NAE);
                 this.vue.redrawAll();
                 model.remove(NAE);
             }
-            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=Terrain.xmin)&&(t.getX()<=Terrain.xmax)){
+            else if((SegmentPlusProche == this.ST3)&&(t.getX()>=T.getXmin())&&(t.getX()<=T.getXmax())){
                 NoeudAppuiEncastrement NAE = new NoeudAppuiEncastrement(t.getX(), this.P3.py);
                 model.add(NAE);
                 this.vue.redrawAll();
                 model.remove(NAE);
             }
-            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=Terrain.ymin)&&(t.getY()<=Terrain.ymax)){
+            else if((SegmentPlusProche == this.ST4)&&(t.getY()>=T.getYmin())&&(t.getY()<=T.getYmax())){
                 NoeudAppuiEncastrement NAE = new NoeudAppuiEncastrement(this.P4.px, t.getY());
                 model.add(NAE);
                 this.vue.redrawAll();
@@ -467,7 +450,7 @@ public class Controleur {
             }
             
         } else if(this.etat == 50) {  
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
+            if((t.getX()>T.getXmin()+20)&&(t.getX()<T.getXmax()-20)&&(t.getY()>T.getYmin()+20)&&(t.getY()<T.getYmax()-20)) {
                 Treillis model = this.vue.getModel();
                 NoeudSimple NS = new NoeudSimple(t.getX(), t.getY());
                 model.add(NS);
@@ -479,10 +462,9 @@ public class Controleur {
             }
             
         } else if(this.etat == 81) { 
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
-                Point P2 = new Point(t.getX(), t.getY());
+            if((t.getX()>T.getXmin())&&(t.getX()<T.getXmax())&&(t.getY()>T.getYmin())&&(t.getY()<T.getYmax())) {
                 Treillis model = this.vue.getModel();
-                SegmentTerrain ST = new SegmentTerrain(this.P1, P2);
+                SegmentTerrain ST = new SegmentTerrain(this.P1, new Point(t.getX(), t.getY()));
                 model.add(ST);
                 this.vue.redrawAll();
                 model.remove(ST);
@@ -492,23 +474,44 @@ public class Controleur {
             }
             
         } else if(this.etat == 82) { 
-            if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
-                Point P3 = new Point(t.getX(), t.getY());
+            if((t.getX()>T.getXmin())&&(t.getX()<T.getXmax())&&(t.getY()>T.getYmin())&&(t.getY()<T.getYmax())) {
                 Treillis model = this.vue.getModel();
-                SegmentTerrain ST1 = new SegmentTerrain(this.P1, this.P2);
-                SegmentTerrain ST2 = new SegmentTerrain(this.P1, P3);
-                SegmentTerrain ST3 = new SegmentTerrain(this.P2, P3);
-                model.add(ST1);
-                model.add(ST2);
-                model.add(ST3);
+                SegmentTerrain SegT1 = new SegmentTerrain(this.P1, this.P2);
+                SegmentTerrain SegT2 = new SegmentTerrain(this.P1, new Point(t.getX(), t.getY()));
+                SegmentTerrain SegT3 = new SegmentTerrain(this.P2, new Point(t.getX(), t.getY()));
+                model.add(SegT1);
+                model.add(SegT2);
+                model.add(SegT3);
                 this.vue.redrawAll();
-                model.remove(ST1);
-                model.remove(ST2);
-                model.remove(ST3);
+                model.remove(SegT1);
+                model.remove(SegT2);
+                model.remove(SegT3);
             }
             else{
                 this.vue.redrawAll();
             }
+        }
+    }
+    
+    public int matériau(){
+        Color c = this.vue.getcDessin().getCouleur();
+        if(c == Color.BLUE){
+            return 1;
+        }
+        else if(c == Color.BROWN){
+            return 2;
+        }
+        else if(c == Color.SILVER){
+            return 3; 
+        }
+        else if(c == Color.GREY){
+            return 4;
+        }
+        else if(c == Color.CHOCOLATE){
+            return 5;
+        }
+        else{
+            throw new Error("Il faut mettre 1, 2, 3, 4 ou 5");
         }
     }
   

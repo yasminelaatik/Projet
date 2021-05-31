@@ -10,7 +10,7 @@ public class TypeBarre {
             
     public TypeBarre(int identificateur){
         if ((identificateur < 1) | (identificateur > 5)) {
-            throw new Error("bah non en faite") ;
+            throw new Error("l'identificateur doit valoir 1, 2, 3, 4 ou 5"); 
         }
         this.identificateur = identificateur;
         if (identificateur == 1) {
@@ -21,32 +21,32 @@ public class TypeBarre {
             this.rMaxT= Catalogue.acier.get("acier").get(4) ;
         }
         if (identificateur == 2) {
-            this.cout = Catalogue.bois.get("acier").get(0) ;
-            this.lMin = Catalogue.bois.get("acier").get(1) ;
-            this.lMax = Catalogue.bois.get("acier").get(2) ;
-            this.rMaxC = Catalogue.bois.get("acier").get(3) ;
-            this.rMaxT= Catalogue.bois.get("acier").get(4) ;
+            this.cout = Catalogue.bois.get("bois").get(0) ;
+            this.lMin = Catalogue.bois.get("bois").get(1) ;
+            this.lMax = Catalogue.bois.get("bois").get(2) ;
+            this.rMaxC = Catalogue.bois.get("bois").get(3) ;
+            this.rMaxT= Catalogue.bois.get("bois").get(4) ;
         }
         if (identificateur == 3) {
-            this.cout = Catalogue.aluminium.get("acier").get(0) ;
-            this.lMin = Catalogue.aluminium.get("acier").get(1) ;
-            this.lMax = Catalogue.aluminium.get("acier").get(2) ;
-            this.rMaxC = Catalogue.aluminium.get("acier").get(3) ;
-            this.rMaxT= Catalogue.aluminium.get("acier").get(4) ;
+            this.cout = Catalogue.aluminium.get("aluminium").get(0) ;
+            this.lMin = Catalogue.aluminium.get("aluminium").get(1) ;
+            this.lMax = Catalogue.aluminium.get("aluminium").get(2) ;
+            this.rMaxC = Catalogue.aluminium.get("aluminium").get(3) ;
+            this.rMaxT= Catalogue.aluminium.get("aluminium").get(4) ;
         }
         if (identificateur == 4) {
-            this.cout = Catalogue.béton.get("acier").get(0) ;
-            this.lMin = Catalogue.béton.get("acier").get(1) ;
-            this.lMax = Catalogue.béton.get("acier").get(2) ;
-            this.rMaxC = Catalogue.béton.get("acier").get(3) ;
-            this.rMaxT= Catalogue.béton.get("acier").get(4) ;
+            this.cout = Catalogue.béton.get("béton").get(0) ;
+            this.lMin = Catalogue.béton.get("béton").get(1) ;
+            this.lMax = Catalogue.béton.get("béton").get(2) ;
+            this.rMaxC = Catalogue.béton.get("béton").get(3) ;
+            this.rMaxT= Catalogue.béton.get("béton").get(4) ;
         }
         if (identificateur == 5) {
-            this.cout = Catalogue.bronze.get("acier").get(0) ;
-            this.lMin = Catalogue.bronze.get("acier").get(1) ;
-            this.lMax = Catalogue.bronze.get("acier").get(2) ;
-            this.rMaxC = Catalogue.bronze.get("acier").get(3) ;
-            this.rMaxT= Catalogue.bronze.get("acier").get(4) ;
+            this.cout = Catalogue.bronze.get("bronze").get(0) ;
+            this.lMin = Catalogue.bronze.get("bronze").get(1) ;
+            this.lMax = Catalogue.bronze.get("bronze").get(2) ;
+            this.rMaxC = Catalogue.bronze.get("bronze").get(3) ;
+            this.rMaxT= Catalogue.bronze.get("bronze").get(4) ;
         }
     }
     

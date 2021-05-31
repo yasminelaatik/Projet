@@ -10,7 +10,6 @@ public abstract class Composants {
     public Treillis getTreillis() {
         return this.treillis;
     }
-
     public void setTreillis(Treillis treillis) {
         this.treillis = treillis;
     }

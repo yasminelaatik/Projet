@@ -5,30 +5,28 @@ import javafx.scene.paint.Color;
 
 public class Terrain extends Composants {
 
-    public static double xmin ;
-    public static double xmax ;
-    public static double ymin ;
-    public static double ymax ;
-    public Color c;
+    public double xmin ;
+    public double xmax ;
+    public double ymin ;
+    public double ymax ;
     
     public Terrain(double xmin, double xmax, double ymin, double ymax) {
         this.xmin = xmin;
         this.xmax = xmax;
         this.ymin = ymin;
         this.ymax = ymax;
-        this.c = Color.LIMEGREEN;
     }
     
-    public static double getXmin() {
+    public double getXmin() {
         return xmin;
     }
-    public static double getXmax() {
+    public double getXmax() {
         return xmax;
     }
-    public static double getYmin() {
+    public double getYmin() {
         return ymin;
     }
-    public static double getYmax() {
+    public double getYmax() {
         return ymax;
     }
     public double min(double a, double b){
@@ -42,21 +40,20 @@ public class Terrain extends Composants {
     
     @Override
     public void construire(GraphicsContext context){
-        context.setStroke(this.c);
-        context.strokeRect(Terrain.xmin, Terrain.ymin, (Terrain.xmax-Terrain.xmin), (Terrain.ymax-Terrain.ymin));
+        context.setStroke(Color.LIMEGREEN);
+        context.strokeRect(this.xmin, this.ymin, (this.xmax-this.xmin), (this.ymax-this.ymin));
     }
-    
     @Override
     public void changerCouleur(Color c){
+        //la couleur du terrain est indépendante du type de la barre
     }
-    
     @Override
     public double distance(Point p){
-        double d1 = new SegmentTerrain(new Point(Terrain.xmin, Terrain.ymin), new Point(Terrain.xmax, Terrain.ymin)).distance(p);
-        double d2 = new SegmentTerrain(new Point(Terrain.xmax, Terrain.ymin), new Point(Terrain.xmax, Terrain.ymax)).distance(p);
-        double d3 = new SegmentTerrain(new Point(Terrain.xmax, Terrain.ymax), new Point(Terrain.xmin, Terrain.ymax)).distance(p);
-        double d4 = new SegmentTerrain(new Point(Terrain.xmin, Terrain.ymax), new Point(Terrain.xmin, Terrain.ymin)).distance(p);
+        double d1 = new SegmentTerrain(new Point(xmin, ymin), new Point(xmax, ymin)).distance(p);
+        double d2 = new SegmentTerrain(new Point(xmax, ymin), new Point(xmax, ymax)).distance(p);
+        double d3 = new SegmentTerrain(new Point(xmax, ymax), new Point(xmin, ymax)).distance(p);
+        double d4 = new SegmentTerrain(new Point(xmin, ymax), new Point(xmin, ymin)).distance(p);
         
-        return min(min(d1,d2), min(d3, d4));
+        return min(min(d1,d2), min(d3,d4));
     }
 }
