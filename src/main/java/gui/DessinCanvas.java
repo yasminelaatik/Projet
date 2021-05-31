@@ -4,7 +4,7 @@ import classes.Treillis;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
-import java.util.Scanner;
+import classesRécupérées.Lire;
 import javafx.scene.paint.Color;
 
 public class DessinCanvas extends Pane{
@@ -56,40 +56,28 @@ public class DessinCanvas extends Pane{
         System.out.println("3 : aluminium");
         System.out.println("4 : béton");
         System.out.println("5 : bronze");
-        Scanner sc = new Scanner(System.in);
-        
-        if(sc.nextLine().equals("acier")){
+        int matériau = Lire.i();
+        if(matériau == 1){
             return Color.BLUE;
+            
         }
-        else if(sc.nextLine().equals("bois")){
+        else if(matériau == 2){
             return Color.BROWN;
         }
-        else if(sc.nextLine().equals("aluminium")){
+        else if(matériau == 3){
             return Color.SILVER;
         }
-        else if(sc.nextLine().equals("béton")){
-            return Color.BEIGE;
+        else if(matériau == 4){
+            return Color.GREY;
         }
-        else if(sc.nextLine().equals("bronze")){
+        else if(matériau == 5){
             return Color.CHOCOLATE;
         }
         else{
-            throw new Error("Il faut mettre acier, bois, aluminium, béton ou bronze");
+            throw new Error("Il faut mettre 1, 2, 3, 4 ou 5");
         }
     }
-    /*
-    public void redrawAll(){
-        GraphicsContext context = this.realCanvas.getGraphicsContext2D();
-        Treillis model = this.main.getModel();
-        model.changerCouleur(this.couleur);
-        Controleur control = this.main.getControleur();
-        if((control.getSelectionNoeuds().get(0) != null)&&(control.getSelectionNoeuds().size() >= 2)){
-            control.getSelectionNoeuds().get(control.getSelectionNoeuds().size()-2).changerCouleur(Color.CYAN);
-            control.getSelectionNoeuds().get(control.getSelectionNoeuds().size()-1).changerCouleur(Color.CYAN);
-        }
-        model.construire(context);
-    }
-*/
+
     public void redrawAll(){
         GraphicsContext context = this.realCanvas.getGraphicsContext2D();
         Treillis model = this.main.getModel();

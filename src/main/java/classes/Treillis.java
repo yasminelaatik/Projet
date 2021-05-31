@@ -1,7 +1,5 @@
 package classes;
 
- 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,14 +9,16 @@ import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import classesRécupérées.Matrice;
-
- 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class Treillis extends Composants {
     
     
     private List<Barre> listeB;
     private List<Noeuds> listeN;
+    public List<Composants> listeC;
     
     public static int identificateur;
     public static int nbBarres;
@@ -26,25 +26,19 @@ public class Treillis extends Composants {
     
     private static int idT = 0;
 
- 
-
     public Treillis(){
         idT++;
         this.identificateur = idT;
         this.listeB = new ArrayList<Barre>();
         this.nbNoeuds = nbNoeuds;
         this.listeC = new ArrayList<>();
-        this.listeN = new ArrayList<>();
-       
+        this.listeN = new ArrayList<>(); 
     }
-    
     
     public int getNbNoeuds(){
        this.nbNoeuds = this.listeN.size();
         return nbNoeuds;
     }
-
- 
 
     public int getNbBarres (){
         this.nbBarres = this.listeB.size();
@@ -58,14 +52,6 @@ public class Treillis extends Composants {
         this.listeB.add(b);
         b.setidTreillis(this.identificateur);
     }
-
- 
-
-    
-    public List<Composants> listeC;
-   
-    private List<Noeuds> liste;
-    
    
     public void add(Composants C){
          if (C.getTreillis() != this) {
@@ -96,19 +82,11 @@ public class Treillis extends Composants {
     public List<Barre> getListeB(){
         return this.listeB;
     }
-    
-     /**
-     * @return the idT
-     */
+
     public static int getIdT() {
         return idT;
     }
 
- 
-
-    /**
-     * @param aIdT the idT to set
-     */
     public static void setIdT(int aIdT) {
         idT = aIdT;
     }
@@ -127,10 +105,9 @@ public class Treillis extends Composants {
         }
     }
     
-    
     public String toString(){
         String res="";
-    res=res+"FINCATALOGUE"+"\n";
+        res=res+"FINCATALOGUE"+"\n";
         for(int i=0; i<this.getListeN().size();i++){
             res=res+this.getListeN().get(i).toString()+"\n";
         }
@@ -142,21 +119,23 @@ public class Treillis extends Composants {
         return res;
     }
     
+    public void sauvegarder(File fichier) throws FileNotFoundException, IOException{
+        //préparation du canal de lecture
+        FileReader in = new FileReader(fichier);
+        BufferedReader bR = new BufferedReader(in);
+        long taille = fichier.length();
+        //préparation du canal de sortie
+        FileWriter out = new FileWriter(fichier);
+        BufferedWriter bW = new BufferedWriter(out);
+        //copie
+        for(int i=0 ; i<taille ; i++){
+            bW.write(bR.read());
+        }
+        //fermeture du canal
+        bR.close();
+        bW.close();
+    }
     
-    
-    public void sauvegarder(File fichier ){
-         try{
-             BufferedWriter o = new BufferedWriter(new FileWriter(fichier));
-             o.write(this.toString());
-             o.close();
-         }
-         catch(IOException erreur){
-             System.out.println("Erreur dans l'écriture du fichier");
-         }
-     }
-    
-    
-   
     public void addN(Noeuds n){
         if(n.getIdT() != this.identificateur){
             throw new Error("les noeud est déjà dans un autre treillis");

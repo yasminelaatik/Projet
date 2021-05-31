@@ -19,6 +19,7 @@ import classes.Noeuds;
 import classes.Composants;
 import classes.Barre;
 import classes.TriangleTerrain;
+import java.io.File;
 
 public class Controleur {
     
@@ -69,7 +70,7 @@ public class Controleur {
         this.changeEtat(70);}  
     public void boutonTriangleTerrain(Event t){
         this.changeEtat(80);}
-    public void boutonSimulation(Event t){
+    public void boutonSauvegarde(Event t){
         this.changeEtat(90);}
     
     public void changeEtat(int nouvelEtat){
@@ -82,7 +83,7 @@ public class Controleur {
             this.vue.getRbNoeudSimple().setDisable(true);
             this.vue.getRbSelectNoeuds().setDisable(true);
             this.vue.getbSegmentTerrain().setDisable(true);
-            this.vue.getbSimulation().setDisable(true); 
+            this.vue.getbSauvegarde().setDisable(true); 
             this.vue.getRbTriangleTerrain().setDisable(true);
             this.vue.getRbTerrain().setSelected(true);
             
@@ -100,7 +101,7 @@ public class Controleur {
             this.vue.getRbTriangleTerrain().setDisable(false);
             this.vue.getRbSelectNoeuds().setDisable(true);
             this.vue.getbSegmentTerrain().setDisable(true);
-            this.vue.getbSimulation().setDisable(true);
+            this.vue.getbSauvegarde().setDisable(true);
             this.vue.getRbAppuiSimple().setSelected(true);
             this.etat = 20;
             
@@ -125,23 +126,16 @@ public class Controleur {
             model.add(new SegmentTerrain(P1, P2));
             model.add(new Barre(getSelectionNoeuds().get(taille-2), getSelectionNoeuds().get(taille-1)));
             this.vue.redrawAll();
-            this.vue.getbSimulation().setDisable(false);
+            this.vue.getbSauvegarde().setDisable(false);
             changeEtat(60);
             
         } else if(nouvelEtat == 80) {
             this.etat = 80;
 
         } else if(nouvelEtat == 90) {
-            this.vue.getRbTerrain().setDisable(true);
-            this.vue.getRbAppuiSimple().setDisable(true);
-            this.vue.getRbAppuiDouble().setDisable(true);
-            this.vue.getRbEncastrement().setDisable(true);
-            this.vue.getRbNoeudSimple().setDisable(true);
-            this.vue.getRbSelectNoeuds().setDisable(true);
-            this.vue.getbSegmentTerrain().setDisable(true);
-            this.vue.getbSimulation().setDisable(true);
-            this.vue.getRbTriangleTerrain().setDisable(true);
-            //forces
+            //sauvegarde
+            //this.vue.getModel().sauvegarder(new File("info.txt"));
+            this.vue.getbSauvegarde().setDisable(true);
             this.etat = 90;
         }
     }
@@ -209,6 +203,7 @@ public class Controleur {
             listeNoeuds.add(NAS);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
+            this.vue.getbSauvegarde().setDisable(false);
             
         } else if (this.etat == 30) {
             NoeudAppuiDouble NAD;
@@ -234,6 +229,7 @@ public class Controleur {
             listeNoeuds.add(NAD);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
+            this.vue.getbSauvegarde().setDisable(false);
             
         } else if (this.etat == 40) {
             NoeudAppuiEncastrement NAE;
@@ -259,6 +255,7 @@ public class Controleur {
             listeNoeuds.add(NAE);
             this.vue.redrawAll();
             this.vue.getRbSelectNoeuds().setDisable(false);
+            this.vue.getbSauvegarde().setDisable(false);
             
         } else if (this.etat == 50) { 
             if((t.getX()>Terrain.getXmin()+20)&&(t.getX()<Terrain.getXmax()-20)&&(t.getY()>Terrain.getYmin()+20)&&(t.getY()<Terrain.getYmax()-20)) {
@@ -268,6 +265,7 @@ public class Controleur {
                 listeNoeuds.add(NS);
                 this.vue.redrawAll();
                 this.vue.getRbSelectNoeuds().setDisable(false);
+                this.vue.getbSauvegarde().setDisable(false);
             }
 
         } else if (this.etat == 60) {
@@ -349,6 +347,7 @@ public class Controleur {
                 model.add(new Barre(this.N2, this.N3));
                 model.add(new Barre(this.N3, this.N1));
                 this.vue.redrawAll();
+                this.vue.getbSauvegarde().setDisable(false);
                 this.etat = 80;
             }
         }

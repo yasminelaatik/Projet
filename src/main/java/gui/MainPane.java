@@ -20,7 +20,7 @@ public class MainPane extends BorderPane {
     private RadioButton rbSelectNoeuds;
     private RadioButton rbTriangleTerrain;
     private Button bSegmentTerrain;
-    private Button bSimulation;
+    private Button bSauvegarde;
     
     private DessinCanvas cDessin;
     
@@ -61,9 +61,9 @@ public class MainPane extends BorderPane {
         this.bSegmentTerrain.setOnAction((t) -> {
             this.controleur.boutonSegmentTerrain(t); 
         });
-        this.bSimulation = new Button("Lancer la Simulation");
-        this.bSimulation.setOnAction((t) -> {
-            this.controleur.boutonSimulation(t); 
+        this.bSauvegarde = new Button("Sauvegarde");
+        this.bSauvegarde.setOnAction((t) -> {
+            this.controleur.boutonSauvegarde(t); 
         });
         
         ToggleGroup bgEtat = new ToggleGroup();
@@ -75,7 +75,7 @@ public class MainPane extends BorderPane {
         this.rbSelectNoeuds.setToggleGroup(bgEtat);
         this.rbTriangleTerrain.setToggleGroup(bgEtat);
         
-        VBox vbGauche = new VBox(this.rbTerrain, this.rbAppuiSimple, this.rbAppuiDouble, this.rbEncastrement, this.rbNoeudSimple, this.rbSelectNoeuds, this.rbTriangleTerrain, this.bSegmentTerrain, this.bSimulation);
+        VBox vbGauche = new VBox(this.rbTerrain, this.rbAppuiSimple, this.rbAppuiDouble, this.rbEncastrement, this.rbNoeudSimple, this.rbSelectNoeuds, this.rbTriangleTerrain, this.bSegmentTerrain, this.bSauvegarde);
         this.setLeft(vbGauche);
         
         this.cDessin = new DessinCanvas(this);
@@ -120,8 +120,8 @@ public class MainPane extends BorderPane {
     public RadioButton getRbTriangleTerrain() {
         return rbTriangleTerrain;
     }
-    public Button getbSimulation() {
-        return bSimulation;
+    public Button getbSauvegarde() {
+        return bSauvegarde;
     }
 }
 
